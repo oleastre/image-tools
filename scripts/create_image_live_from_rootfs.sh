@@ -41,7 +41,7 @@ server_creation_opts="$server_creation_opts --volume='$(( $minimum_total_volume_
 
 server_name="image-writer-$(date +%Y-%m-%d_%H:%M)"
 signal_port=$(shuf -i 10000-60000 -n 1)
-server_env="build_method=$build_method rootfs_url=$rootfs_url signal_build_done_port=$signal_port AUTHORIZED_KEY=$key $SERVER_ENV"
+server_env="\"build_method=$build_method rootfs_url=$rootfs_url signal_build_done_port=$signal_port AUTHORIZED_KEY=$key${SERVER_ENV:+ $SERVER_ENV}\""
 
 server_id=$(create_server "$server_type" "$server_creation_opts" "$server_name" "$image_disk_size" "$server_env" "$bootscript_id")
 [ $? -eq 0 ] || exiterr
